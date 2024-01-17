@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -10,21 +11,26 @@ import (
 
 const NUM_FILES = 10000000000
 
+func prompt(msg string) error {
+	var answer string
+	for {
+		log.Printf("%s? y/n\n", msg)
+		fmt.Scan(&answer)
+		answer = strings.ToUpper(answer)
+		if answer == "Y" {
+			return nil
+		}
+
+		if answer == "N" {
+			return errors.New("user said no")
+		}
+	}
+}
+
 func main() {
 	log.Printf("PID: %d\n", os.Getpid())
-
-	var start string
-	for {
-		log.Println("start? y/n")
-		fmt.Scan(&start)
-		start = strings.ToUpper(start)
-		if start == "Y" {
-			break
-		}
-
-		if start == "N" {
-			return
-		}
+	if err := prompt("start"); err != nil {
+		return
 	}
 
 	log.Println("starting")
@@ -61,6 +67,9 @@ func main() {
 		}
 		if i%1000 == 0 {
 			log.Printf("end %d\n", i)
+			if err := prompt("continue"); err != nil {
+				return
+			}
 		}
 		// }()
 	}
