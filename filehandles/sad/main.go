@@ -36,9 +36,7 @@ func main() {
 	}
 
 	log.Println("starting")
-	tmpDir := os.TempDir()
-	log.Printf("tempdir: %s\n", tmpDir)
-	p := path.Join(tmpDir, "resource-exhaustion")
+	p := path.Join(os.TempDir(), "resource-exhaustion")
 	log.Println(p)
 
 	log.Printf("rm -rf %s\n", p)
