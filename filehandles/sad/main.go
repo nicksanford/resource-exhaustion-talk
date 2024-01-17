@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"sync"
 )
 
 const NUM_FILES = 10000000000
@@ -55,9 +56,13 @@ func main() {
 		log.Fatalf(err.Error())
 	}
 
-	for i := 0; i < NUM_FILES; i++ {
-		tmpI := i
-		go func() {
+	c := make(chan int)
+	wg := sync.WaitGroup{}
+	defer wg.Wait()
+	workFunc := func() {
+		defer wg.Done()
+		for {
+			tmpI := <-c
 			if tmpI%1000 == 0 {
 				log.Printf("start %d\n", tmpI)
 			}
@@ -68,10 +73,19 @@ func main() {
 			f.Close()
 			if tmpI%1000 == 0 {
 				log.Printf("end %d\n", tmpI)
-				if err := prompt("continue"); err != nil {
-					return
-				}
+				// if err := prompt("continue"); err != nil {
+				// 	return
+				// }
 			}
-		}()
+		}
+	}
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go workFunc()
+	}
+
+	for i := 0; i < NUM_FILES; i++ {
+		c <- i
 	}
 }
