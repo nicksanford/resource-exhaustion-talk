@@ -47,7 +47,7 @@ func main() {
 
 	for i := 0; i < NUM_FILES; i++ {
 		if i%1000 == 0 {
-			fmt.Println("start ", i)
+			log.Printf("start %d\n", i)
 		}
 		// go func() {
 		_, err := os.CreateTemp(path.Join(tmpDir, "resource-exhaustion"), "")
@@ -55,7 +55,7 @@ func main() {
 			log.Fatalf(err.Error())
 		}
 		if i%1000 == 0 {
-			fmt.Println("end ", i)
+			log.Printf("end %d\n", i)
 		}
 		// }()
 	}
