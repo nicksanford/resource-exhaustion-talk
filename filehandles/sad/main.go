@@ -33,20 +33,24 @@ func main() {
 	p := path.Join(tmpDir, "resource-exhaustion")
 	log.Println(p)
 
+	log.Printf("rm -rf %s\n", p)
 	if err := os.RemoveAll(p); err != nil {
 		log.Fatalf(err.Error())
 	}
 
+	log.Printf("mkdir -p %s\n", p)
 	if err := os.MkdirAll(p, 0o755); err != nil {
 		log.Fatalf(err.Error())
 	}
 
+	log.Println("creating temp file")
 	_, err := os.CreateTemp(p, "")
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
 
 	for i := 0; i < NUM_FILES; i++ {
+		log.Printf("creating temp file %d\n", i)
 		if i%1000 == 0 {
 			log.Printf("start %d\n", i)
 		}
