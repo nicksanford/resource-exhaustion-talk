@@ -40,7 +40,7 @@ func main() {
 		log.Fatalf(err.Error())
 	}
 
-	_, err := os.CreateTemp(path.Join(tmpDir, "resource-exhaustion"), "")
+	_, err := os.CreateTemp(p, "")
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
@@ -50,7 +50,7 @@ func main() {
 			log.Printf("start %d\n", i)
 		}
 		// go func() {
-		_, err := os.CreateTemp(path.Join(tmpDir, "resource-exhaustion"), "")
+		_, err := os.CreateTemp(p, "")
 		if err != nil {
 			log.Fatalf(err.Error())
 		}
