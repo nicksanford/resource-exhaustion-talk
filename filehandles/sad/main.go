@@ -56,21 +56,22 @@ func main() {
 	}
 
 	for i := 0; i < NUM_FILES; i++ {
-		if i%1000 == 0 {
-			log.Printf("start %d\n", i)
-		}
-		// go func() {
-		f, err := os.CreateTemp(p, "")
-		if err != nil {
-			log.Fatalf(err.Error())
-		}
-		f.Close()
-		if i%1000 == 0 {
-			log.Printf("end %d\n", i)
-			if err := prompt("continue"); err != nil {
-				return
+		tmpI := i
+		go func() {
+			if tmpI%1000 == 0 {
+				log.Printf("start %d\n", tmpI)
 			}
-		}
-		// }()
+			f, err := os.CreateTemp(p, "")
+			if err != nil {
+				log.Fatalf(err.Error())
+			}
+			f.Close()
+			if tmpI%1000 == 0 {
+				log.Printf("end %d\n", tmpI)
+				if err := prompt("continue"); err != nil {
+					return
+				}
+			}
+		}()
 	}
 }
