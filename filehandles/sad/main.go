@@ -60,10 +60,11 @@ func main() {
 			log.Printf("start %d\n", i)
 		}
 		// go func() {
-		_, err := os.CreateTemp(p, "")
+		f, err := os.CreateTemp(p, "")
 		if err != nil {
 			log.Fatalf(err.Error())
 		}
+		f.Close()
 		if i%1000 == 0 {
 			log.Printf("end %d\n", i)
 			if err := prompt("continue"); err != nil {
