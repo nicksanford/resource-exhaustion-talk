@@ -56,7 +56,6 @@ func main() {
 	}
 
 	for i := 0; i < NUM_FILES; i++ {
-		log.Printf("creating temp file %d\n", i)
 		if i%1000 == 0 {
 			log.Printf("start %d\n", i)
 		}
