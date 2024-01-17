@@ -1,20 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"path"
 )
 
 const NUM_FILES = 10000000000
 
 func main() {
-	log.Printf("tempdir: %s", os.TempDir())
+	tmpDir := os.TempDir()
+	log.Printf("tempdir: %s", tmpDir)
 	for i := 0; i < NUM_FILES; i++ {
-		tmpI := i
 		go func() {
-			fmt.Printf("i: %d", tmpI)
-			_, err := os.CreateTemp("", "resource-exhaustion")
+			_, err := os.CreateTemp(path.Join(tmpDir, "resource-exhaustion"), "")
 			if err != nil {
 				log.Fatalf(err.Error())
 			}
