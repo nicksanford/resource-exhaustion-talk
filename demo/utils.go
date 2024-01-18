@@ -10,7 +10,7 @@ import (
 func Prompt() {
 	var answer string
 	for {
-		log.Println("Paused\nquit? y/n")
+		fmt.Println("Paused\nquit? y/n")
 		fmt.Scan(&answer)
 		answer = strings.ToUpper(answer)
 		if answer == "N" {

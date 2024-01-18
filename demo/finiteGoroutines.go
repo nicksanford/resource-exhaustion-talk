@@ -3,6 +3,7 @@ package demo
 import (
 	"log"
 	"os"
+	"runtime"
 	"sync"
 )
 
@@ -24,7 +25,7 @@ func FiniteNumberOfGoRoutines(p string) {
 		}
 	}
 
-	numCPUs := 2
+	numCPUs := runtime.NumCPU()
 	for goRoutineNum := 0; goRoutineNum < numCPUs; goRoutineNum++ {
 		wg.Add(1)
 		go workFunc(goRoutineNum)

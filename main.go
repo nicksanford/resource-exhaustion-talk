@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"path"
 
@@ -9,16 +9,16 @@ import (
 )
 
 func main() {
-	log.Printf("PID: %d\n", os.Getpid())
+	fmt.Printf("PID: %d\n", os.Getpid())
 	demo.Prompt()
-	// demo.RunOutOfMemoryImmediately()
-	// demo.RunOutOfMemory()
 	p := path.Join(os.TempDir(), "resource-exhaustion")
-	demo.CleanTempDir(p)
 	demo.CreateTempDir(p)
 
-	demo.SingleGoroutineNoClose(p)
-	// demo.SingleGoroutineWithClose(p)
+	// debug.SetMaxThreads(1000000000000000)
 	// demo.InfiniteNumberOfGoRoutines(p)
 	// demo.FiniteNumberOfGoRoutines(p)
+	// demo.SingleGoroutineNoClose(p)
+	// demo.SingleGoroutineWithClose(p)
+	// demo.RunOutOfMemoryImmediately()
+	demo.RunOutOfMemory()
 }
